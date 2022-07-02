@@ -49,8 +49,8 @@ else:
 
 lock = threading.Lock()
 counter = 0
-proxies = []
 proxy_counter = 0
+proxies = []
 spotify_profile = str(input("[>] Spotify Link: "))
 threads = int(input("\n[>] Threads: "))
 
