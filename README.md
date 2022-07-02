@@ -3,7 +3,7 @@
 
   # Spotify Follow Bot
   
-  ![image](https://cdn.discordapp.com/attachments/982041859134201859/990111706262958080/unknown.png)
+  ![image](https://cdn.discordapp.com/attachments/915014426770419763/992879894180659281/unknown.png)
 
 </div>
 
