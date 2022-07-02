@@ -164,18 +164,12 @@ class spotify:
 
 
 def load_proxies():
-    if not os.path.exists("proxies.txt"):
-        print("\nFile proxies.txt not found")
-        time.sleep(10)
-        os._exit(0)
-    with open("proxies.txt", "r", encoding = "UTF-8") as f:
-        for line in f.readlines():
-            line = line.replace("\n", "")
-            proxies.append(line)
-        if not len(proxies):
-            print("\nNo proxies loaded in proxies.txt")
-            time.sleep(5)
-            os._exit(0)
+    r = requests.get('https://api.proxyscrape.com/?request=displayproxies&proxytype=http&timeout=5000&ssl=yes')
+    for proxy in r.text.split('\n'):
+        proxy = proxy.replace('\r', '')
+        if proxy:
+            proxies.append(proxy)
+    return proxies
     
 
 option = int(input('\nEnter "1" to load proxies: '))
