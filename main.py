@@ -7,6 +7,13 @@ import threading, os, time, sys, random, string, requests, colorama
 from colorama import Fore
 
 
+def center(var:str, space:int=None):
+    if not space:
+        space = (os.get_terminal_size().columns - len(var.splitlines()[int(len(var.splitlines())/2)])) / 2
+    
+    return "\n".join((' ' * int(space)) + var for var in var.splitlines())
+
+
 if sys.platform == "win32":
 	clear = lambda: os.system("cls")
 else:
@@ -15,8 +22,10 @@ else:
 
 
 
-def menu():
-    print(Fore.GREEN  + """\n\n
+class Console():
+    def ui(self):
+        os.system(f'cls && title Spotify Follow Bot  ^| xann wrld#0101 ' if os.name == "nt" else "clear")
+        print(center(f"""\n\n
 
 
 ███████╗██████╗  ██████╗ ████████╗██╗███████╗██╗   ██╗
@@ -25,22 +34,22 @@ def menu():
 ╚════██║██╔═══╝ ██║   ██║   ██║   ██║██╔══╝    ╚██╔╝    
 ███████║██║     ╚██████╔╝   ██║   ██║██║        ██║      
 ╚══════╝╚═╝      ╚═════╝    ╚═╝   ╚═╝╚═╝        ╚═╝       
-                                  By: xann wrld#9953
+                                  By: xann wrld#0101
                                                         
 > https://github.com/xannbtw/ ~ https://discord.gg/Ww4kgVdJ
 \n\n
-""" + Fore.RESET)
+              """).replace('█', Fore.GREEN + "█" + Fore.RESET).replace('>', Fore.GREEN+ ">" + Fore.RESET).replace('~', Fore.GREEN+ "~" + Fore.RESET))       
 
 
 clear()
 
 correct_password = "MQnpyKDVWwtcC96Ut4jJURp4y4ngCh"
 
-password = input('Enter password: ')
+password = input('\nEnter password: ')
 
 if password == correct_password:
     clear()
-    menu()
+    Console().ui()
     time.sleep(3)
 else:
     exit()
@@ -49,12 +58,12 @@ else:
 
 lock = threading.Lock()
 counter = 0
-proxy_counter = 0
 proxies = []
+proxy_counter = 0
 spotify_profile = str(input("[>] Spotify Link: "))
 threads = int(input("\n[>] Threads: "))
-
-
+email = ("").join(random.choices(string.ascii_letters + string.digits, k = 8)) + "@gmail.com"
+password = ("").join(random.choices(string.ascii_letters + string.digits, k = 8))
     
 class spotify:
 
@@ -70,8 +79,6 @@ class spotify:
             "Content-Type": "application/x-www-form-urlencoded",
             "Referer": "https://www.spotify.com/"
         }
-        email = ("").join(random.choices(string.ascii_letters + string.digits, k = 8)) + "@gmail.com"
-        password = ("").join(random.choices(string.ascii_letters + string.digits, k = 8))
         proxies = None
         if self.proxy != None:
             proxies = {"https": f"http://{self.proxy}"}
@@ -167,11 +174,11 @@ def load_proxies():
             proxies.append(line)
         if not len(proxies):
             print("\nNo proxies loaded in proxies.txt")
-            time.sleep(10)
+            time.sleep(5)
             os._exit(0)
+    
 
-print("\n[1] Load Proxies\n")
-option = int(input("\n> "))
+option = int(input('\nEnter "1" to load proxies: '))
 if option == 1:
     load_proxies()
 
@@ -189,7 +196,7 @@ def thread_starter():
     result, error = obj.follow()
     if result == True:
         counter += 1
-        safe_print(Fore.GREEN + "[>] Follow {}".format(counter))
+        safe_print(Fore.GREEN + "[>] Follow: {}:{} ---> {}".format(email, password, counter))
     else:
         safe_print(Fore.RESET + f"[>] Error {error}")
 
