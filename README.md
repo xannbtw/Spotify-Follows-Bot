@@ -13,7 +13,6 @@
 1. Make sure you installed all the requirements (requirements.txt)
 2. Run the start.bat file
 3. That's it! Now the bot will starts generating what you asked for
-4. Password: MQnpyKDVWwtcC96Ut4jJURp4y4ngCh
 
 
 ### Please note
