@@ -41,19 +41,10 @@ class Console():
               """).replace('█', Fore.GREEN + "█" + Fore.RESET).replace('>', Fore.GREEN+ ">" + Fore.RESET).replace('~', Fore.GREEN+ "~" + Fore.RESET))       
 
 
+
 clear()
+Console().ui()
 
-correct_password = "MQnpyKDVWwtcC96Ut4jJURp4y4ngCh"
-
-password = input('\nEnter password: ')
-
-if password == correct_password:
-    clear()
-    Console().ui()
-    time.sleep(3)
-else:
-    exit()
-    
 
 
 lock = threading.Lock()
@@ -62,9 +53,8 @@ proxies = []
 proxy_counter = 0
 spotify_profile = str(input("[>] Spotify Link: "))
 threads = int(input("\n[>] Threads: "))
-email = ("").join(random.choices(string.ascii_letters + string.digits, k = 8)) + "@gmail.com"
-password = ("").join(random.choices(string.ascii_letters + string.digits, k = 8))
     
+
 class spotify:
 
     def __init__(self, profile, proxy = None):
@@ -79,10 +69,12 @@ class spotify:
             "Content-Type": "application/x-www-form-urlencoded",
             "Referer": "https://www.spotify.com/"
         }
+        email = ("").join(random.choices(string.ascii_letters + string.digits, k = 8)) + "@gmail.com"
+        password = ("").join(random.choices(string.ascii_letters + string.digits, k = 8))
         proxies = None
         if self.proxy != None:
             proxies = {"https": f"http://{self.proxy}"}
-        data = f"birth_day=1&birth_month=01&birth_year=1970&collect_personal_info=undefined&creation_flow=&creation_point=https://www.spotify.com/uk/&displayname=github.com/xannbtw&email={email}&gender=neutral&iagree=1&key=a1e486e2729f46d6bb368d6b2bcda326&password={password}&password_repeat={password}&platform=www&referrer=&send-email=1&thirdpartyemail=0&fb=0"
+        data = f"birth_day=1&birth_month=01&birth_year=1970&collect_personal_info=undefined&creation_flow=&creation_point=https://www.spotify.com/uk/&displayname=github.com/geettyos&email={email}&gender=neutral&iagree=1&key=a1e486e2729f46d6bb368d6b2bcda326&password={password}&password_repeat={password}&platform=www&referrer=&send-email=1&thirdpartyemail=0&fb=0"
         try:
             create = self.session.post("https://spclient.wg.spotify.com/signup/public/v1/account", headers = headers, data = data, proxies = proxies)
             if "login_token" in create.text:
@@ -139,6 +131,8 @@ class spotify:
         if login_token == None:
             return None, "while registering, ratelimit"
         elif login_token == False:
+            if self.proxy == None:
+                return None, f"unable to send request on register"
             return None, f"bad proxy on register {self.proxy}"
         auth_token = self.get_token(login_token)
         if auth_token == None:
@@ -172,7 +166,8 @@ def load_proxies():
     return proxies
     
 
-option = int(input('\nEnter "1" to load proxies: '))
+print("\n[1] Proxies\n[2] Proxyless")
+option = int(input("\n> "))
 if option == 1:
     load_proxies()
 
